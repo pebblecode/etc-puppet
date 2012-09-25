@@ -1,0 +1,18 @@
+[submodule "modules/ntp"]
+	path = modules/ntp
+	url = git://github.com/pebblecode/puppet-ntp.git
+[submodule "modules/nginx"]
+	path = modules/nginx
+	url = git://github.com/pebblecode/puppet-nginx.git
+[submodule "modules/motd"]
+	path = modules/motd
+	url = git://github.com/pebblecode/puppet-motd.git
+[submodule "modules/openssh-server"]
+	path = modules/openssh-server
+	url = git://github.com/pebblecode/puppet-openssh-server.git
+[submodule "modules/iptables"]
+	path = modules/iptables
+	url = git://github.com/pebblecode/puppet-iptables.git
+[submodule "modules/mysql"]
+	path = modules/mysql
+	url = git://github.com/pebblecode/puppet-mysql.git
