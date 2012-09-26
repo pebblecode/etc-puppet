@@ -1,8 +1,6 @@
 node 'frink.pebblecode.net' {
-  $mysql_password = 'gipredips'
   package { ['vim', 'openssh-server', 'git', 'zsh']: ensure => latest }
   include ntp
-  include mysql::server
   include motd
   class { 'iptables': ssh_port => 22 }
   user { 'pebble':
@@ -40,5 +38,16 @@ node 'frink.pebblecode.net' {
     name => "ttt@Macintosh-4.local",
     type => 'ssh-rsa',
     require => File['/home/pebble/.ssh']
+  }
+  # Mysql
+  $mysql_password = 'gipredips'
+  include mysql::server
+  # Postgres: https://github.com/inkling/puppet-postgresql
+  class { 'postgresql::server':
+    config_hash => {
+      'ip_mask_allow_all_users' => '0.0.0.0/0',
+      'listen_addresses' => '*'
+      'postgres_password' => 'fr1nkp0stgr3sfr1nk',
+    }
   }
 }
