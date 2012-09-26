@@ -41,4 +41,16 @@ node 'herman.pebblecode.net' {
     type => 'ssh-rsa',
     require => File['/home/pebble/.ssh']
   }
+
+  # PPA for node
+  # deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
+  # deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
+  file_line { 'node-deb-ppa':
+    path => '/etc/apt/sources.list',
+    line => 'deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main',
+  }
+  file_line { 'node-debsrc-ppa':
+    path => '/etc/apt/sources.list',
+    line => 'deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main',
+  }
 }
