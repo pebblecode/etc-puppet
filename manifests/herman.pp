@@ -1,4 +1,7 @@
 node 'herman.pebblecode.net' {
+  package { [ 'vim','openssh-server', 'git', 'zsh']:
+    ensure => latest
+  }
   # PPA for node
   # deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
   # deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
@@ -21,9 +24,8 @@ node 'herman.pebblecode.net' {
     command => "apt-get update",
     require => File['nodejs-ppa'],
   }
-
-  package { [ 'vim','openssh-server', 'git', 'zsh', 'nodejs']:
-    ensure => latest
+  package { 'nodejs':
+    ensure => installed,
   }
   include ntp
   include motd
