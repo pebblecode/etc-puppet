@@ -47,7 +47,7 @@ node 'frink.pebblecode.net' {
   class { 'postgresql::server':
     config_hash => {
       'ip_mask_allow_all_users' => '0.0.0.0/0',
-      'listen_addresses' => '*'
+      'listen_addresses' => '*',
       'postgres_password' => 'fr1nkp0stgr3sfr1nk',
     }
   }
