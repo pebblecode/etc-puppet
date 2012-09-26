@@ -1,5 +1,23 @@
 node 'herman.pebblecode.net' {
-  package { [ 'vim','openssh-server', 'git', 'zsh']:
+  # PPA for node
+  # deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
+  # deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
+  file { "/etc/apt/sources.list.d":
+    ensure => directory,
+  }
+  file { 'nodejs-ppa':
+    path => "/etc/apt/sources.list.d/ppa-nodejs.list",
+    ensure => file,
+    content => "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main\ndeb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main",
+    require => File["/etc/apt/sources.list.d"]
+  }
+  exec{ 'herman-apt-update':
+    path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    command => "apt-get update",
+    require => File['nodejs-ppa'],
+  }
+
+  package { [ 'vim','openssh-server', 'git', 'zsh', 'nodejs']:
     ensure => latest
   }
   include ntp
@@ -40,17 +58,5 @@ node 'herman.pebblecode.net' {
     name => "ttt@Macintosh-4.local",
     type => 'ssh-rsa',
     require => File['/home/pebble/.ssh']
-  }
-
-  # PPA for node
-  # deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
-  # deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
-  file_line { 'node-deb-ppa':
-    path => '/etc/apt/sources.list',
-    line => 'deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main',
-  }
-  file_line { 'node-debsrc-ppa':
-    path => '/etc/apt/sources.list',
-    line => 'deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main',
   }
 }
