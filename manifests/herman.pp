@@ -11,6 +11,11 @@ node 'herman.pebblecode.net' {
     content => "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main\ndeb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main",
     require => File["/etc/apt/sources.list.d"]
   }
+  exec { 'sign-nodejs-ppa':
+    path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    command => 'sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12',
+    require => File['nodejs-ppa'],
+  }
   exec{ 'herman-apt-update':
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     command => "apt-get update",
