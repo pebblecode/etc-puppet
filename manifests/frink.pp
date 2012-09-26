@@ -43,6 +43,7 @@ node 'frink.pebblecode.net' {
   $mysql_password = 'gipredips'
   include mysql::server
   # Postgres: https://github.com/inkling/puppet-postgresql
+  $postgres_password = 'fr1nkp0stgr3sfr1nk'
   class { 'postgresql::server':
     config_hash => {
       'ip_mask_allow_all_users' => '0.0.0.0/0',
