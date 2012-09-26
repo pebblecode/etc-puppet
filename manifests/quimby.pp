@@ -26,14 +26,6 @@ node 'quimby.pebblecode.net' {
       command => 'su -c "git clone git://github.com/shapeshed/dotfiles.git /home/george/dotfiles && cd /home/george/dotfiles && /usr/bin/ruby install.rb" george',
       require => [Package['git'], User['george']]
   }
-  ssh_authorized_key { 'george':
-    user => 'george',
-    ensure => present,
-    key => "AAAAB3NzaC1yc2EAAAABIwAAAQEAzqXyjW94aqdmBDZ5EEHwHW5TxptgVn0QcmcRaXOJC0wgz1U6fQ/6kmfeBEF+WY3H084UzeaPwZ2jXzpLkTHevi2RgADKKQtyLjAnhhXJgZ3N5u1QvU6tnizMXENK2nkt65fPmvygCWGP8wq4iujGIBt5Y48hxPGC2BAuH5AYjPx7TzZyeH9trAfrFdxugZ1Cq+HbKq2ahG9yClhfvG2y9LBrk/+5BCOiqzbhnOfD+Txl6+VVZqwdMARzGQT9DVfj62sp6t6ZBb5e6mrrETutiEcd08yOObzlwFCMGzjSQj0vdo0AKFsNx7F7eIQBK72s9QL6/PEKzcQgJcnJll9nzw==",
-    name => "george@shapeshed.com",
-    type => ssh-rsa,
-    require => File['/home/george/.ssh']
-  }
 
   user { 'pebble':
     name => 'pebble',
