@@ -44,11 +44,22 @@ node 'frink.pebblecode.net' {
   include mysql::server
   # Postgres: https://github.com/inkling/puppet-postgresql
   $postgres_password = 'fr1nkp0stgr3sfr1nk'
+  $postgres_default_version = '9.1'
   class { 'postgresql::server':
     config_hash => {
+      'postgres_default_version' => '9.1',
       'ip_mask_allow_all_users' => '0.0.0.0/0',
       'listen_addresses' => '*',
       'postgres_password' => 'fr1nkp0stgr3sfr1nk',
     }
   }
+  exec { "mysql-access-subnet1":
+    command => "/usr/bin/mysqladmin -uroot password ${mysql_password} -e 'GRANT ALL PRIVILEGES ON *.* to \'root\'@\'192.168.3.%\' IDENTIFIED by \'${mysql_password}\';'",
+    require => Service["mysql"],
+  }
+  exec { "mysql-access-subnet2":
+    command => "/usr/bin/mysqladmin -uroot password ${mysql_password} -e 'GRANT ALL PRIVILEGES ON *.* to \'root\'@\'10.128.%.%\' IDENTIFIED by \'${mysql_password}\';'",
+    require => Service["mysql"],
+  }
+
 }
