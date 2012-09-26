@@ -22,7 +22,7 @@ node 'herman.pebblecode.net' {
   exec{ "/usr/bin/apt-get update":
     alias => 'aptgetupdate',
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    require => File['nodejs-ppa'],
+    require => Exec['sign-nodejs-ppa'],
   }
   package { 'nodejs':
     ensure => installed,
