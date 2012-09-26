@@ -19,13 +19,14 @@ node 'herman.pebblecode.net' {
     command => 'sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12',
     require => File['nodejs-ppa'],
   }
-  exec{ 'herman-apt-update':
+  exec{ "/usr/bin/apt-get update":
+    alias => 'aptgetupdate'
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    command => "apt-get update",
     require => File['nodejs-ppa'],
   }
   package { 'nodejs':
     ensure => installed,
+    require => Exec['aptgetupdate']
   }
   include ntp
   include motd
