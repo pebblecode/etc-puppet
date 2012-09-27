@@ -42,4 +42,18 @@ node 'lois.pebblecode.net' {
     type => 'ssh-rsa',
     require => File['/home/pebble/.ssh']
   }
+
+  # Rbenv to manage ruby versions
+  # The plugin: https://github.com/alup/puppet-rbenv/
+  rbenv::install { "pebble":
+    user => "pebble"
+  }
+  rbenv::compile { "pebble/1.9.3-p194":
+    user => "pebble",
+    ruby => "1.9.3-p194"
+  }
+  rbenv::gem { "rails":
+    user => "pebble",
+    ruby => "1.9.3-p194",
+  }
 }
