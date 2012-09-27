@@ -46,7 +46,9 @@ node 'lois.pebblecode.net' {
   # Rbenv to manage ruby versions
   # The plugin: https://github.com/alup/puppet-rbenv/
   rbenv::install { "pebble":
-    user => "pebble"
+    user => "pebble",
+    group => "pebble",
+    home => "/home/pebble"
   }
   rbenv::compile { "pebble/1.9.3-p194":
     user => "pebble",
