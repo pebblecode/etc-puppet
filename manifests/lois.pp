@@ -52,7 +52,8 @@ node 'lois.pebblecode.net' {
   }
   rbenv::compile { "pebble/1.9.3-p194":
     user => "pebble",
-    ruby => "1.9.3-p194"
+    ruby => "1.9.3-p194",
+    global => true
   }
   rbenv::gem { "rails":
     user => "pebble",
