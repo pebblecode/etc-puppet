@@ -54,12 +54,12 @@ node 'frink.pebblecode.net' {
   exec { "mysql-access-subnet1":
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     command => "mysql -uroot -p${mysql_password} -e \"GRANT ALL PRIVILEGES ON *.* to 'root'@'192.168.3.%' IDENTIFIED BY '${mysql_password}' WITH GRANT OPTION;\"",
-    require => Service["mysql"],
+    require => Exec['set-mysql-password'],
   }
   exec { "mysql-access-subnet2":
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     command => "mysql -uroot -p${mysql_password} -e \"GRANT ALL PRIVILEGES ON *.* to 'root'@'10.128.%.%' IDENTIFIED BY '${mysql_password}' WITH GRANT OPTION;\"",
-    require => Service["mysql"],
+    require => Exec['set-mysql-password'],
   }
 
 }
