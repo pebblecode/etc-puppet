@@ -1,43 +1,48 @@
 node 'herman.pebblecode.net' {
+
   package { [ 'vim','openssh-server', 'git', 'zsh']:
     ensure => latest
   }
-  # PPA for node
-  # deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
-  # deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main 
+
   file { "/etc/apt/sources.list.d":
     ensure => directory,
   }
+
   file { 'nodejs-ppa':
     path => "/etc/apt/sources.list.d/ppa-nodejs.list",
     ensure => file,
     content => "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main\ndeb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main",
     require => File["/etc/apt/sources.list.d"]
   }
+
   exec { 'sign-nodejs-ppa':
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     command => 'sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12',
     require => File['nodejs-ppa'],
   }
+
   exec{ "/usr/bin/apt-get update":
     alias => 'aptgetupdate',
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     require => Exec['sign-nodejs-ppa'],
   }
+
   package { 'nodejs':
     ensure => installed,
     require => Exec['aptgetupdate']
   }
+
   include ntp
   include motd
-  include couchdb
   class { 'iptables': ssh_port => 22 }
   class { 'couchdb': bind => '0.0.0.0' }
+
   user { 'pebble':
     name => 'pebble',
     managehome => true,
     ensure => present
   }
+
   file { "/home/pebble/.ssh":
     ensure => directory, 
     owner => pebble,
@@ -45,6 +50,7 @@ node 'herman.pebblecode.net' {
     mode => 700,
     require => User['pebble']
   }
+
   ssh_authorized_key { 'herman-george':
     user => 'pebble',
     ensure => present,
@@ -53,6 +59,7 @@ node 'herman.pebblecode.net' {
     type => 'ssh-rsa',
     require => File['/home/pebble/.ssh']
   }
+
   ssh_authorized_key { 'herman-vince':
     user => 'pebble',
     ensure => present,
@@ -61,6 +68,7 @@ node 'herman.pebblecode.net' {
     type => 'ssh-dss',
     require => File['/home/pebble/.ssh']
   }
+
   ssh_authorized_key { 'herman-tak':
     user => 'pebble',
     ensure => present,
@@ -69,4 +77,5 @@ node 'herman.pebblecode.net' {
     type => 'ssh-rsa',
     require => File['/home/pebble/.ssh']
   }
+
 }
