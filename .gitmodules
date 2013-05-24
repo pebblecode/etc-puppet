@@ -25,3 +25,6 @@
 [submodule "modules/rbenv"]
 	path = modules/rbenv
 	url = git://github.com/alup/puppet-rbenv.git
+[submodule "modules/couchdb"]
+	path = modules/couchdb
+	url = https://github.com/bdossantos/puppet-module-couchdb

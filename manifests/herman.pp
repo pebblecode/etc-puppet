@@ -30,7 +30,9 @@ node 'herman.pebblecode.net' {
   }
   include ntp
   include motd
+  include couchdb
   class { 'iptables': ssh_port => 22 }
+  class { 'couchdb': bind => '0.0.0.0' }
   user { 'pebble':
     name => 'pebble',
     managehome => true,
