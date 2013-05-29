@@ -1,5 +1,9 @@
 node 'herman.pebblecode.net' {
 
+  include ntp
+  include motd
+  class { 'iptables': ssh_port => 22 }
+
   package { [ 'vim','openssh-server', 'git', 'zsh']:
     ensure => latest
   }
@@ -17,10 +21,18 @@ node 'herman.pebblecode.net' {
     ensure => latest
   }
 
-  include ntp
-  include motd
-  class { 'iptables': ssh_port => 22 }
-  class { 'couchdb': bind => '0.0.0.0' }
+  apt::source { 'couchdb':
+    location   => 'http://ppa.launchpad.net/nilya/couchdb-1.3/ubuntu',
+    repos      => 'main',
+    key        => 'A6D3315B',
+    key_server => 'keyserver.ubuntu.com',
+    notify => [Package['couchdb']],
+  }
+
+  package { [ 'couchdb' ]:
+    require => Apt::Source['couchdb'],
+    ensure => latest
+  }
 
   user { 'pebble':
     name => 'pebble',
