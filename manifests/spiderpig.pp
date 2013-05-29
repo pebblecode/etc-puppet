@@ -2,7 +2,6 @@ node 'spiderpig.pebblecode.net' {
 
   include motd
 
-  include nginx
   class { openssh-server: ssh_port => 7234 }
   class { iptables: ssh_port => 7234 }
 
