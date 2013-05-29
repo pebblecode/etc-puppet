@@ -27,4 +27,4 @@
 	url = https://github.com/puppetlabs/puppetlabs-apt
 [submodule "modules/postgresql"]
 	path = modules/postgresql
-	url = https://github.com/puppetlabs/puppetlabs-postgresql
+	url = git://github.com/puppetlabs/puppetlabs-postgresql.git
