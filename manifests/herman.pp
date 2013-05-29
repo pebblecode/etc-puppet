@@ -4,32 +4,17 @@ node 'herman.pebblecode.net' {
     ensure => latest
   }
 
-  file { "/etc/apt/sources.list.d":
-    ensure => directory,
+  apt::source { 'nodejs':
+    location   => 'http://ppa.launchpad.net/chris-lea/node.js/ubuntu',
+    repos      => 'main',
+    key        => 'C7917B12',
+    key_server => 'keyserver.ubuntu.com',
+    notify => [Package['nodejs']],
   }
 
-  file { 'nodejs-ppa':
-    path => "/etc/apt/sources.list.d/ppa-nodejs.list",
-    ensure => file,
-    content => "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main\ndeb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main",
-    require => File["/etc/apt/sources.list.d"]
-  }
-
-  exec { 'sign-nodejs-ppa':
-    path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    command => 'sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12',
-    require => File['nodejs-ppa'],
-  }
-
-  exec{ "/usr/bin/apt-get update":
-    alias => 'aptgetupdate',
-    path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    require => Exec['sign-nodejs-ppa'],
-  }
-
-  package { 'nodejs':
-    ensure => installed,
-    require => Exec['aptgetupdate']
+  package { [ 'nodejs' ]:
+    require => Apt::Source['nodejs'],
+    ensure => latest
   }
 
   include ntp
