@@ -1,9 +1,6 @@
 [submodule "modules/ntp"]
 	path = modules/ntp
 	url = git://github.com/pebblecode/puppet-ntp.git
-[submodule "modules/nginx"]
-	path = modules/nginx
-	url = git://github.com/pebblecode/puppet-nginx.git
 [submodule "modules/motd"]
 	path = modules/motd
 	url = git://github.com/pebblecode/puppet-motd.git
