@@ -28,3 +28,6 @@
 [submodule "modules/couchdb"]
 	path = modules/couchdb
 	url = https://github.com/bdossantos/puppet-module-couchdb
+[submodule "modules/apt"]
+	path = modules/apt
+	url = https://github.com/puppetlabs/puppetlabs-apt
