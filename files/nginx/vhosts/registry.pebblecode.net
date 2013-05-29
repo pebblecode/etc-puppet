@@ -1,0 +1,11 @@
+server {
+
+  listen 80;
+  server_name registry.pebblecode.net;
+
+  location / {
+    access_log off;
+    proxy_pass http://10.128.0.5:5984;
+  }
+
+}
