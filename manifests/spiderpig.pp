@@ -39,7 +39,7 @@ node 'spiderpig.pebblecode.net' {
       owner => root,
       group => root,
       require => Package['nginx'],
-      source => "puppet:///nginx/nginx.conf"
+      source => "puppet:///files/nginx/nginx.conf"
   }
 
   file { "/etc/nginx/conf.d/proxy.conf":
@@ -47,21 +47,21 @@ node 'spiderpig.pebblecode.net' {
       owner => root,
       group => root,
       require => Package['nginx'],
-      source => "puppet:///nginx/conf.d/proxy.conf"
+      source => "puppet:///files/nginx/conf.d/proxy.conf"
   }
 
-  file { "/etc/nginx/sites-available/regsitry.pebblecode.net":
+  file { "/etc/nginx/sites-available/registry.pebblecode.net":
       mode => 644,
       owner => root,
       group => root,
       require => Package['nginx'],
-      source => "puppet:///nginx/vhosts/registry.pebblecode.net"
+      source => "puppet:///files/nginx/vhosts/registry.pebblecode.net"
   }
 
   file { "/etc/nginx/sites-enabled/regsitry.pebblecode.net":
     ensure => 'link',
     require => [ Package['nginx'], File['/etc/nginx/sites-available/registry.pebblecode.net'] ],
-    target => '/etc/nginx/sites-available/bede-chat',
+    target => '/etc/nginx/sites-available/registry.pebblecode.net',
     notify  => Service["nginx"]
   }
 
