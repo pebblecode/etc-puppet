@@ -13,9 +13,6 @@
 [submodule "modules/mysql"]
 	path = modules/mysql
 	url = git://github.com/pebblecode/puppet-mysql.git
-[submodule "modules/postgresql"]
-	path = modules/postgresql
-	url = git://github.com/inkling/puppet-postgresql.git
 [submodule "modules/stdlib"]
 	path = modules/stdlib
 	url = git://github.com/puppetlabs/puppetlabs-stdlib.git
